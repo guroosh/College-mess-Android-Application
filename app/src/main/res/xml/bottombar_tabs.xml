@@ -1,0 +1,17 @@
+<tabs>
+    <tab
+        id="@+id/tab_wall"
+        icon="@drawable/ic_post_it"
+        title="Wall"
+        barColorWhenSelected="@color/brown" />
+    <tab
+        id="@+id/tab_menu"
+        icon="@drawable/ic_menu"
+        title="Menu"
+        barColorWhenSelected="@color/fuchsia" />
+    <tab
+        id="@+id/tab_stats"
+        icon="@drawable/ic_statistics"
+        title="Stats"
+        barColorWhenSelected="@color/navy" />
+</tabs>
