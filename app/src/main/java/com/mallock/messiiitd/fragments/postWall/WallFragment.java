@@ -1,4 +1,4 @@
-package com.mallock.messiiitd.fragments;
+package com.mallock.messiiitd.fragments.postWall;
 
 import android.support.v4.app.Fragment;
 
