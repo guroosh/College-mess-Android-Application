@@ -1,11 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="yolo, perfolo"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
+
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_chart_likes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+<!--
+        <View
+            android:layout_width="@dimen/border_thickness"
+            android:layout_height="match_parent"
+            android:background="@color/black" />-->
+
+        <com.github.mikephil.charting.charts.LineChart
+
+            android:id="@+id/line_chart_dislikes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/border_thickness"
+        android:layout_margin="25dp"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
+
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart_likes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+<!--
+        <View
+            android:layout_width="@dimen/border_thickness"
+            android:layout_height="match_parent"
+            android:background="@color/black" />-->
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart_dislikes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
