@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
 
 /**
@@ -21,7 +23,7 @@ public class WallFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wall_layout, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(new PostAdapter(null, getContext()));
+        recyclerView.setAdapter(new PostAdapter(DataSupplier.getPosts(getContext()), getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return super.onCreateView(inflater, container, savedInstanceState);
     }

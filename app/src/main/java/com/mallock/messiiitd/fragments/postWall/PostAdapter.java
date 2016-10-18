@@ -33,6 +33,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     public PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.post_child_layout, parent, false);
+        updateUI();
         return new PostHolder(itemView);
     }
 
@@ -98,5 +99,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             like = (LinearLayout) itemView.findViewById(R.id.layout_like);
             comment = (LinearLayout) itemView.findViewById(R.id.layout_comment);
         }
+    }
+    private void updateUI()
+    {
+//        getActivity()
+//                List posts
+//        mAdapter = new Adapter(posts)
+//    recycleview.setadapter(mAdapter)
     }
 }
