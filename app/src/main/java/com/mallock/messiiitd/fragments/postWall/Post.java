@@ -12,7 +12,7 @@ public class Post {
     private boolean isHidden;
     private String text;
     private ArrayList<Comment> comments;
-    private String imageUrl;
+    private String imageUrl, userImageUrl;
     private int upvotes;
     private String dateTime;
 
@@ -42,5 +42,33 @@ public class Post {
 
     public String getDateTime() {
         return dateTime;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public String getUserImageUrl() {
+        return userImageUrl;
+    }
+
+    public void setUserImageUrl(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
     }
 }

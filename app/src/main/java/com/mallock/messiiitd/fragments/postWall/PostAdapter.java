@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mallock.messiiitd.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,18 +34,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     public PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.post_child_layout, parent, false);
-        updateUI();
+//        updateUI();
         return new PostHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final PostHolder holder, int position) {
         Post post = posts.get(position);
-        //todo: load with picasso
+        //todo: uncomment the following code, when url is supplied
+        /*
+        Picasso.with(context)
+                .load(post.getUserImageUrl())
+                .into(holder.profileImage);
+*/
+        if(post.getImageUrl()!=null && !post.getImageUrl().equals(""))
+            holder.postImage.setVisibility(View.VISIBLE);
+        Picasso.with(context)
+                .load(post.getImageUrl())
+                .into(holder.postImage);
+
         holder.dateText.setText(post.getDateTime());
         holder.usernameText.setText("@" + post.getUserId());
         holder.postBodyText.setText(post.getText());
-        holder.likeText.setText(post.getUpvotes()+" Likes");
+        holder.likeText.setText(post.getUpvotes() + " Likes");
         if (isLiked(post)) {
             holder.likeText.setTextColor(Color.BLUE);
         }
@@ -79,9 +91,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         return posts.size();
     }
 
+
     public static class PostHolder extends RecyclerView.ViewHolder {
         View wholePost;
-        ImageView profileImage;
+        ImageView profileImage, postImage;
         TextView dateText, usernameText, postBodyText, likeText, commentText;
         ImageButton hideButton;
         LinearLayout like, comment;
@@ -90,6 +103,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             super(itemView);
             this.wholePost = itemView;
             this.profileImage = (ImageView) itemView.findViewById(R.id.image_user);
+            postImage = (ImageView) itemView.findViewById(R.id.image_post);
             dateText = (TextView) itemView.findViewById(R.id.text_date_time);
             usernameText = (TextView) itemView.findViewById(R.id.text_username);
             postBodyText = (TextView) itemView.findViewById(R.id.text_post_body);
@@ -99,12 +113,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             like = (LinearLayout) itemView.findViewById(R.id.layout_like);
             comment = (LinearLayout) itemView.findViewById(R.id.layout_comment);
         }
-    }
-    private void updateUI()
-    {
-//        getActivity()
-//                List posts
-//        mAdapter = new Adapter(posts)
-//    recycleview.setadapter(mAdapter)
     }
 }

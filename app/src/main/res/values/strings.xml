@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mess IIITD</string>
+    <string name="test_string_long">this is a very long post that was written by an idiot a long long time ago and it gives us immense pleasure to tell you that this idiot is ... Me.</string>
 </resources>
