@@ -14,21 +14,23 @@ import com.mallock.messiiitd.R;
 
 import java.util.ArrayList;
 
-public class ViewPagerFragment extends Fragment{
+public class ViewPagerFragment extends Fragment {
 
+    ArrayList<MenuItem> menuItems;
+    int position;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<MenuItem> menuItems;
 
     public static ViewPagerFragment newInstance(int position) {
 
         Bundle args = new Bundle();
-
         ViewPagerFragment fragment = new ViewPagerFragment();
+        fragment.position = position;
         fragment.setArguments(args);
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class ViewPagerFragment extends Fragment{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        menuItems = DataSupplier.getMenuForDay(" ");
+        menuItems = DataSupplier.getMenuForDay(position);
         mAdapter = new MenuAdapter(menuItems);
         mRecyclerView.setAdapter(mAdapter);
 

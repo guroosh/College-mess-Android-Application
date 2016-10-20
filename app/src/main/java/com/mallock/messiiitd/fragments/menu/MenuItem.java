@@ -10,4 +10,8 @@ public class MenuItem {
     String itemName;
     @Nullable
     String imageUrl;
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 }

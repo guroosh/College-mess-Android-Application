@@ -27,8 +27,7 @@ public class MainActivity extends BaseActivity {
         //Adding toolbar to activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("TITLE");
-        getSupportActionBar().setIcon(R.drawable.ic_hide);
+        setToolBarChild();
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {

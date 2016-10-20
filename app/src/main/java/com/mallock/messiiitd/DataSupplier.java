@@ -39,7 +39,52 @@ public class DataSupplier {
         return null;
     }
 
-    public static ArrayList<MenuItem> getMenuForDay(String s) {
-        return null;
+    public static ArrayList<MenuItem> getMenuForDay(int position) {
+        ArrayList<MenuItem> list = new ArrayList<>();
+        if (position == 0) {
+            MenuItem item1 = new MenuItem();
+            item1.setItemName("Bread");
+            list.add(item1);
+            MenuItem i1 = new MenuItem();
+            i1.setItemName("Omelet");
+            list.add(i1);
+            MenuItem q = new MenuItem();
+            q.setItemName("Butter");
+            list.add(q);
+        } else if (position == 1) {
+
+            MenuItem item1 = new MenuItem();
+            item1.setItemName("Rajma");
+            list.add(item1);
+            MenuItem i1 = new MenuItem();
+            i1.setItemName("Rice");
+            list.add(i1);
+            MenuItem q = new MenuItem();
+            q.setItemName("Raita");
+            list.add(q);
+        }else if (position == 2) {
+
+            MenuItem item1 = new MenuItem();
+            item1.setItemName("Bread Pakora");
+            list.add(item1);
+            MenuItem i1 = new MenuItem();
+            i1.setItemName("Tea");
+            list.add(i1);
+        }else if (position == 3) {
+            MenuItem item1 = new MenuItem();
+            item1.setItemName("Roti");
+            list.add(item1);
+            MenuItem i1 = new MenuItem();
+            i1.setItemName("Chicken");
+            list.add(i1);
+            MenuItem q = new MenuItem();
+            q.setItemName("Paneer");
+            list.add(q);
+            MenuItem q1 = new MenuItem();
+            q1.setItemName("Salad");
+            list.add(q1);
+        }
+
+        return list;
     }
 }

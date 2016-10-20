@@ -51,6 +51,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             holder.postImage.setVisibility(View.VISIBLE);
         Picasso.with(context)
                 .load(post.getImageUrl())
+                .error(R.drawable.ic_hide)
                 .into(holder.postImage);
 
         holder.dateText.setText(post.getDateTime());

@@ -1,11 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:id="@+id/mtextview"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_toStartOf="@+id/voteCount"
+        android:gravity="center_vertical"
+        android:text="word" />
+
+    <TextView
+        android:id="@+id/voteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textColor="@color/green"
+        android:textSize="24dp"
+        android:text="6"
+        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/linearLayout"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:id="@+id/button_upvote"
+            android:src="@drawable/ic_upvote" />
+
+        <ImageButton
+            android:id="@+id/button_downvote"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_downvote" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/border_thickness"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/black" />
+</RelativeLayout>

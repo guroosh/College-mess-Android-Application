@@ -32,18 +32,7 @@ public class BaseActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(false);
-        // Gravity.RIGHT |
-        // layoutParams.rightMargin = 40;
-        try {
-            actionBar.setDisplayShowHomeEnabled(true);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        try {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        getSupportActionBar().setIcon(R.drawable.ic_app);
     }
 
 
