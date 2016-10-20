@@ -2,6 +2,7 @@ package com.mallock.messiiitd;
 
 import android.content.Context;
 
+import com.mallock.messiiitd.fragments.menu.MenuItem;
 import com.mallock.messiiitd.fragments.menu.WeeklyMenu;
 import com.mallock.messiiitd.fragments.postWall.Post;
 
@@ -35,6 +36,10 @@ public class DataSupplier {
 
     //todo return list of one Weekly Menu from server, or hardcode          @Paurush
     public static WeeklyMenu getMenu(Context context) {
+        return null;
+    }
+
+    public static ArrayList<MenuItem> getMenuForDay(String s) {
         return null;
     }
 }

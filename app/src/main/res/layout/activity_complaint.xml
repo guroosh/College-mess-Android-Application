@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_complaint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mallock.messiiitd.ComplaintActivity">
+
+    <TextView
+        android:text="Complaints/suggestions"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/compHeading" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Subject"
+        android:ems="10"
+        android:layout_below="@+id/compHeading"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="54dp"
+        android:id="@+id/subject" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:hint="Content"
+        android:layout_below="@+id/subject"
+        android:layout_alignEnd="@+id/subject"
+        android:layout_marginTop="57dp"
+        android:id="@+id/content" />
+
+    <Button
+        android:text="Upload image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content"
+        android:layout_alignStart="@+id/content"
+        android:layout_marginTop="88dp"
+        android:id="@+id/imageLoad" />
+
+    <Button
+        android:text="Send mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageLoad"
+        android:layout_alignStart="@+id/imageLoad"
+        android:layout_marginTop="62dp"
+        android:id="@+id/send" />
+</RelativeLayout>

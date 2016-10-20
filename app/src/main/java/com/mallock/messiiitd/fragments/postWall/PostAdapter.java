@@ -71,6 +71,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             @Override
             public void onClick(View v) {
                 // TODO: 13-10-2016 like code goes here
+
+
             }
         });
         holder.comment.setOnClickListener(new View.OnClickListener() {
