@@ -2,6 +2,7 @@ package com.mallock.messiiitd.fragments.postWall;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lusfold.spinnerloading.SpinnerLoading;
 import com.mallock.messiiitd.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,13 +49,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         Picasso.with(context)
                 .load(post.getUserImageUrl())
                 .into(holder.profileImage);
-*/
-        if(post.getImageUrl()!=null && !post.getImageUrl().equals(""))
+        */
+        if (post.getImageUrl() != null && !post.getImageUrl().equals("")) {
             holder.postImage.setVisibility(View.VISIBLE);
+
+            holder.loadingProgressBar.setVisibility(View.VISIBLE);
+        }else{
+            holder.loadingProgressBar.setVisibility(View.GONE);
+        }
         Picasso.with(context)
                 .load(post.getImageUrl())
                 .error(R.drawable.ic_hide)
-                .into(holder.postImage);
+                .into(holder.postImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.loadingProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.loadingProgressBar.setVisibility(View.GONE);
+                    }
+                });
 
         holder.dateText.setText(post.getDateTime());
         holder.usernameText.setText("@" + post.getUserId());
@@ -99,6 +117,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         View wholePost;
         ImageView profileImage, postImage;
         TextView dateText, usernameText, postBodyText, likeText, commentText;
+        SpinnerLoading loadingProgressBar;
         ImageButton hideButton;
         LinearLayout like, comment;
 
@@ -107,6 +126,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             this.wholePost = itemView;
             this.profileImage = (ImageView) itemView.findViewById(R.id.image_user);
             postImage = (ImageView) itemView.findViewById(R.id.image_post);
+            loadingProgressBar = (SpinnerLoading) itemView.findViewById(R.id.loadingProgressBar);
             dateText = (TextView) itemView.findViewById(R.id.text_date_time);
             usernameText = (TextView) itemView.findViewById(R.id.text_username);
             postBodyText = (TextView) itemView.findViewById(R.id.text_post_body);
