@@ -3,6 +3,9 @@ package com.mallock.messiiitd.fragments.postWall;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lusfold.spinnerloading.SpinnerLoading;
+import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -97,7 +101,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // TODO: 13-10-2016 comment code goes here
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inflater.inflate(R.layout.comment_list_layout, null);
+                builder.setView(v.getId());
+                builder.setCancelable(true);
+                builder.setTitle("Comments");
+                CommentAdapter mAdapter = new CommentAdapter(DataSupplier.getComments(v.getContext()));
+                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView2);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(v.getContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mAdapter);
+                builder.show();
             }
         });
     }
@@ -111,6 +129,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     public int getItemCount() {
         return posts.size();
     }
+
+//    public Context getActivity() {
+//        return this.context;
+//    }
 
 
     public static class PostHolder extends RecyclerView.ViewHolder {

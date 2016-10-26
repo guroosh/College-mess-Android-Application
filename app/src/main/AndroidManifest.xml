@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FormActivity" />
-        <activity android:name=".ComplaintActivity"></activity>
+        <activity android:name=".ComplaintActivity" />
     </application>
 
 </manifest>

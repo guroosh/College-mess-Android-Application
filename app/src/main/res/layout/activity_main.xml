@@ -20,4 +20,5 @@
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottombar_tabs" />
 
+
 </RelativeLayout>

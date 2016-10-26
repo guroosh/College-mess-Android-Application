@@ -1,9 +1,11 @@
 package com.mallock.messiiitd;
 
 import android.content.Context;
+import android.support.v7.app.ActionBar;
 
 import com.mallock.messiiitd.fragments.menu.MenuItem;
 import com.mallock.messiiitd.fragments.menu.WeeklyMenu;
+import com.mallock.messiiitd.fragments.postWall.Comment;
 import com.mallock.messiiitd.fragments.postWall.Post;
 
 import java.util.ArrayList;
@@ -31,6 +33,18 @@ public class DataSupplier {
         p2.setText(context.getString(R.string.test_string_long));
         p2.setUpvotes(6);
         list.add(p2);
+        return list;
+    }
+
+    public static ArrayList<Comment> getComments(Context context)
+    {
+        ArrayList<Comment> list = new ArrayList<>();
+        Comment comment1 = new Comment();
+//        comment1.setPost(post);
+        comment1.setText("this is acomment");
+        comment1.setDateTime("19:40, 16th October, 2016");
+        comment1.setUserId("akshat14009");
+        list.add(comment1);
         return list;
     }
 
