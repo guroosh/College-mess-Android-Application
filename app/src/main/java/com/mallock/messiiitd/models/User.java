@@ -1,6 +1,4 @@
-package com.mallock.messiiitd;
-
-import com.mallock.messiiitd.fragments.postWall.Post;
+package com.mallock.messiiitd.models;
 
 import java.util.ArrayList;
 

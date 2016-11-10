@@ -1,4 +1,4 @@
-package com.mallock.messiiitd.fragments.postWall;
+package com.mallock.messiiitd.models;
 
 import java.util.ArrayList;
 
@@ -9,19 +9,20 @@ import java.util.ArrayList;
 // TODO: 13-10-2016 add PostId, List of users who have liked post OR boolean, whether requesting user has liked post.
 public class Post {
     private String userId;
-    private boolean isHidden;
+    private boolean hidden;
     private String text;
+    private boolean liked;
     private ArrayList<Comment> comments;
     private String imageUrl, userImageUrl;
-    private int upvotes;
-    private String dateTime;
+    private int upVotes;
+    private String date;
 
     public String getUserId() {
         return userId;
     }
 
     public boolean isHidden() {
-        return isHidden;
+        return hidden;
     }
 
     public String getText() {
@@ -36,12 +37,12 @@ public class Post {
         return imageUrl;
     }
 
-    public int getUpvotes() {
-        return upvotes;
+    public int getUpVotes() {
+        return upVotes;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
     public void setText(String text) {
@@ -52,16 +53,16 @@ public class Post {
         this.imageUrl = imageUrl;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
+    public void setUpVotes(int upVotes) {
+        this.upVotes = upVotes;
     }
 
     public String getUserImageUrl() {

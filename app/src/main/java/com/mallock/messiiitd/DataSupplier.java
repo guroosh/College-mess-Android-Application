@@ -1,12 +1,11 @@
 package com.mallock.messiiitd;
 
 import android.content.Context;
-import android.support.v7.app.ActionBar;
 
 import com.mallock.messiiitd.fragments.menu.MenuItem;
 import com.mallock.messiiitd.fragments.menu.WeeklyMenu;
-import com.mallock.messiiitd.fragments.postWall.Comment;
-import com.mallock.messiiitd.fragments.postWall.Post;
+import com.mallock.messiiitd.models.Comment;
+import com.mallock.messiiitd.models.Post;
 
 import java.util.ArrayList;
 
@@ -19,19 +18,19 @@ public class DataSupplier {
     //todo return list of all posts from server, or hardcode                @Guroosh
     public static ArrayList<Post> getPosts(Context context) {
         Post post1 = new Post();
-        post1.setDateTime("19:40, 16th October, 2016");
+        post1.setDate("19:40, 16th October, 2016");
         post1.setUserId("akshat14009");
         post1.setImageUrl("http://www.pngall.com/wp-content/uploads/2016/03/Food-Free-Download-PNG.png");
         post1.setText(context.getString(R.string.test_string_long));
-        post1.setUpvotes(6);
+        post1.setUpVotes(6);
         ArrayList<Post> list = new ArrayList<>();
         list.add(post1);
 
         Post p2 = new Post();
-        p2.setDateTime("19:40, 16th October, 2016");
+        p2.setDate("19:40, 16th October, 2016");
         p2.setUserId("akshat14009");
         p2.setText(context.getString(R.string.test_string_long));
-        p2.setUpvotes(6);
+        p2.setUpVotes(6);
         list.add(p2);
         return list;
     }

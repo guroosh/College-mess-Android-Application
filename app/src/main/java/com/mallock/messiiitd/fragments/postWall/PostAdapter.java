@@ -2,7 +2,6 @@ package com.mallock.messiiitd.fragments.postWall;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import com.lusfold.spinnerloading.SpinnerLoading;
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.models.Post;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -76,10 +76,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                     }
                 });
 
-        holder.dateText.setText(post.getDateTime());
+        holder.dateText.setText(post.getDate());
         holder.usernameText.setText("@" + post.getUserId());
         holder.postBodyText.setText(post.getText());
-        holder.likeText.setText(post.getUpvotes() + " Likes");
+        holder.likeText.setText(post.getUpVotes() + " Likes");
         if (isLiked(post)) {
             holder.likeText.setTextColor(Color.BLUE);
         }

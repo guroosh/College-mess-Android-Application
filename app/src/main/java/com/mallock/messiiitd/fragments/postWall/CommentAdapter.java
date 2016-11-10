@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.models.Comment;
 
 import java.util.ArrayList;
 
