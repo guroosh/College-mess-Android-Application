@@ -63,7 +63,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/text_post_body"
+            android:id="@+id/text_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/test_string_long"

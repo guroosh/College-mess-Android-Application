@@ -41,7 +41,7 @@ public class DataSupplier {
         ArrayList<Comment> list = new ArrayList<>();
         Comment comment1 = new Comment();
 //        comment1.setPost(post);
-        comment1.setText("this is acomment");
+        comment1.setText("this is a comment");
         comment1.setDateTime("19:40, 16th October, 2016");
         comment1.setUserId("akshat14009");
         list.add(comment1);

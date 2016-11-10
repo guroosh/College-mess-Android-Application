@@ -106,7 +106,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inflater.inflate(R.layout.comment_list_layout, null);
-                builder.setView(v.getId());
+                builder.setView(v);
                 builder.setCancelable(true);
                 builder.setTitle("Comments");
                 CommentAdapter mAdapter = new CommentAdapter(DataSupplier.getComments(v.getContext()));
