@@ -1,5 +1,6 @@
 package com.mallock.messiiitd.fragments.postWall;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -46,6 +47,10 @@ public class WallFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: 11/13/2016 code to make new post
+                // TODO: 11/13/2016 code to make new po
+                AddPostFragment make_post = new AddPostFragment();
+                FragmentManager fm = getActivity().getFragmentManager();
+                make_post.show(fm,"tag");
             }
         });
 

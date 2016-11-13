@@ -22,9 +22,9 @@ public class AddPostFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_dialog_add, container, false);
-        Button button = (Button) getDialog().findViewById(R.id.button_add_post);
-        ImageButton upload_photo = (ImageButton) getDialog().findViewById(R.id.upload_photo);
-        EditText upload_text = (EditText) getDialog().findViewById(R.id.upload_post);
+        Button button = (Button) parent.findViewById(R.id.button_add_post);
+        ImageButton upload_photo = (ImageButton) parent.findViewById(R.id.upload_photo);
+        EditText upload_text = (EditText) parent.findViewById(R.id.upload_post);
         upload_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +38,6 @@ public class AddPostFragment extends DialogFragment {
                 //TODO: call http to add post
             }
         });
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return parent;
     }
 }
