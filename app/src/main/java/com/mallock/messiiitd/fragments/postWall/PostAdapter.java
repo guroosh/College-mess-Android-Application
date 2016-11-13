@@ -68,7 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         */
         if (post.getImageURL() != null && !post.getImageURL().equals("")) {
             holder.postImage.setVisibility(View.VISIBLE);
-
+            holder.loadingProgressBar.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(post.getImageURL())
                     .error(R.drawable.ic_hide)
@@ -83,10 +83,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                             holder.loadingProgressBar.setVisibility(View.GONE);
                         }
                     });
-            holder.loadingProgressBar.setVisibility(View.VISIBLE);
         }else{
             holder.loadingProgressBar.setVisibility(View.GONE);
-
+            holder.postImage.setVisibility(View.GONE);
         }
         holder.dateText.setText(post.getDate());
         holder.usernameText.setText("@" + post.getUserId());
@@ -114,6 +113,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                     public void onFailure(Throwable t) {
                         Toast.makeText(context, "network error. Please try later",Toast.LENGTH_LONG)
                                 .show();
+                        Log.e(TAG, t.getMessage());
                     }
                 });
 
@@ -123,7 +123,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             @Override
             public void onClick(View v) {
                 // TODO: 13-10-2016 like code goes here
-
 
             }
         });
