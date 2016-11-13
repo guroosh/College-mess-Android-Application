@@ -6,37 +6,42 @@ import com.mallock.messiiitd.models.Post;
  * Created by Mallock on 07-10-2016.
  */
 
-public class Comment {
-    private Post post;
-    private String userId;
-    private String text;
-    private String dateTime;
+public class Comment
+{
+    int commentId;
+    String userId;
+    String text;
+    String date;
 
-    public void setPost(Post post) {
-        this.post = post;
+    public int getCommentId() {
+        return commentId;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
 
-    public void setUserId(String id) {
-        this.userId = id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDateTime(String date) {
-        this.dateTime = date;
-    }
-
-    public String getDateTime() {
-        return dateTime;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getText() {
         return text;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,23 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lusfold.spinnerloading.SpinnerLoading;
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Post;
+import com.mallock.messiiitd.retrofit.PostUserClass;
+import com.mallock.messiiitd.retrofit.WallService;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by Mallock on 13-10-2016.
@@ -29,11 +38,14 @@ import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
-    private final ArrayList<Post> posts;
+    private static final String TAG = "PostAdapter";
+    private final List<Post> posts;
     Context context;
+    Retrofit retrofit;
 
-    public PostAdapter(ArrayList<Post> posts, Context context) {
+    public PostAdapter(List<Post> posts, Context context, Retrofit retrofit) {
         this.posts = posts;
+        this.retrofit = retrofit;
         this.context = context;
     }
 
@@ -47,35 +59,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
     @Override
     public void onBindViewHolder(final PostHolder holder, int position) {
-        Post post = posts.get(position);
+        final Post post = posts.get(position);
         //todo: uncomment the following code, when url is supplied
         /*
         Picasso.with(context)
                 .load(post.getUserImageUrl())
                 .into(holder.profileImage);
         */
-        if (post.getImageUrl() != null && !post.getImageUrl().equals("")) {
+        if (post.getImageURL() != null && !post.getImageURL().equals("")) {
             holder.postImage.setVisibility(View.VISIBLE);
 
+            Picasso.with(context)
+                    .load(post.getImageURL())
+                    .error(R.drawable.ic_hide)
+                    .into(holder.postImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            holder.loadingProgressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            holder.loadingProgressBar.setVisibility(View.GONE);
+                        }
+                    });
             holder.loadingProgressBar.setVisibility(View.VISIBLE);
         }else{
             holder.loadingProgressBar.setVisibility(View.GONE);
+
         }
-        Picasso.with(context)
-                .load(post.getImageUrl())
-                .error(R.drawable.ic_hide)
-                .into(holder.postImage, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.loadingProgressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onError() {
-                        holder.loadingProgressBar.setVisibility(View.GONE);
-                    }
-                });
-
         holder.dateText.setText(post.getDate());
         holder.usernameText.setText("@" + post.getUserId());
         holder.postBodyText.setText(post.getText());
@@ -86,8 +98,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         holder.hideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.wholePost.setVisibility(View.GONE);
-                // TODO: 13-10-2016 save in sharedPreferences to keep hidden
+                WallService wallService = retrofit.create(WallService.class);
+                Call<Integer> call = wallService.makeHidden(new PostUserClass(DataSupplier.getUserId(), post.getPostId()));
+                call.enqueue(new retrofit.Callback<Integer>() {
+                    @Override
+                    public void onResponse(Response<Integer> response, Retrofit retrofit) {
+                        if (response.body() != 1) {
+                            Log.e(TAG, "makeHidden returned 0");
+                        }
+                        holder.wholePost.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Toast.makeText(context, "network error. Please try later",Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
             }
         });
         holder.like.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +138,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 builder.setView(v);
                 builder.setCancelable(true);
                 builder.setTitle("Comments");
-                CommentAdapter mAdapter = new CommentAdapter(DataSupplier.getComments(v.getContext()));
+                CommentAdapter mAdapter = new CommentAdapter(post.getComments());
                 RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView2);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(v.getContext());
                 recyclerView.setLayoutManager(mLayoutManager);

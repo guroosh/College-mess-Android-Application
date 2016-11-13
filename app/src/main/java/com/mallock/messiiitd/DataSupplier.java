@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class DataSupplier {
 
     //todo return list of all posts from server, or hardcode                @Guroosh
-    public static ArrayList<Post> getPosts(Context context) {
+    /*public static ArrayList<Post> getPosts(Context context) {
         Post post1 = new Post();
         post1.setDate("19:40, 16th October, 2016");
         post1.setUserId("akshat14009");
@@ -33,9 +33,9 @@ public class DataSupplier {
         p2.setUpVotes(6);
         list.add(p2);
         return list;
-    }
+    }*/
 
-    public static ArrayList<Comment> getComments(Context context)
+    /*public static ArrayList<Comment> getComments(Context context)
     {
         ArrayList<Comment> list = new ArrayList<>();
         Comment comment1 = new Comment();
@@ -45,7 +45,7 @@ public class DataSupplier {
         comment1.setUserId("akshat14009");
         list.add(comment1);
         return list;
-    }
+    }*/
 
     //todo return list of one Weekly Menu from server, or hardcode          @Paurush
     public static WeeklyMenu getMenu(Context context) {
@@ -99,5 +99,9 @@ public class DataSupplier {
         }
 
         return list;
+    }
+
+    public static String getUserId(){
+        return "akshat14009";
     }
 }

@@ -11,6 +11,7 @@ import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Comment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Guroosh Chaudhary on 25-10-2016.
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder>  {
 
-    private final ArrayList<Comment> comments;
+    private final List<Comment> comments;
 
-    public CommentAdapter(ArrayList<Comment> comments) {
+    public CommentAdapter(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -39,7 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
         holder.usernameText.setText("@" + comment.getUserId());
         holder.commentText.setText( comment.getText());
-        holder.dateText.setText( comment.getDateTime());
+        holder.dateText.setText( comment.getDate());
 
     }
 
