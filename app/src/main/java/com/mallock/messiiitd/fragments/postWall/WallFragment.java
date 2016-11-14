@@ -70,7 +70,7 @@ public class WallFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         WallService wallService = retrofit.create(WallService.class);
-        Call<List<Post>> call = wallService.getPosts("akshat14009");
+        Call<List<Post>> call = wallService.getPosts(DataSupplier.getUserId());
         call.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Response<List<Post>> response, Retrofit retrofit) {
