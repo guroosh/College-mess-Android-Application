@@ -127,6 +127,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             @Override
             public void onClick(View v) {
                 // TODO: 13-10-2016 like code goes here
+                WallService wallService = DataSupplier.getRetrofit().create(WallService.class);
+                Call<Integer> call = wallService.toggleLike(DataSupplier.getUserId(),post.getPostId());
+                call.enqueue(new retrofit.Callback<Integer>() {
+                    @Override
+                    public void onResponse(Response<Integer> response, Retrofit retrofit) {
+                        if (holder.likeText.getTextColors().equals(Color.WHITE)) {
+                            holder.likeText.setTextColor(Color.BLUE);
+                        }
+                        else {
+                            holder.likeText.setTextColor(Color.WHITE);
+                        }
+                        //fragment.refreshRecyclerView(recyclerView);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Toast.makeText(fragment.getContext(), "network error. Please try later",Toast.LENGTH_LONG)
+                                .show();
+                        Log.e(TAG, t.getMessage());
+                    }
+                });
 
             }
         });
