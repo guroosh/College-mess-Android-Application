@@ -21,16 +21,16 @@ public interface WallService {
     @GET("getPosts.php/")
     Call<List<Post>> getPosts(@Query("userId") String userId);
 
-    @POST("/addPost.php")
+    @POST("addPost.php")
     Call<Integer> addPost(@Body Post post);
 
     @GET("makeHidden.php/")
     Call<Integer> makeHidden(@Query("userId") String userId, @Query("postId") int postId);
 
-    @POST("/addComment.php/")
-    Call<Integer> addComment(@Body Comment comment);
+    @POST("addComment.php/")
+    Call<Integer> addComment(@Body CommentPost comment);
 
-    @GET("/toggleLike.php")
+    @GET("toggleLike.php")
     Call<Integer> toggleLike(@Query("userId") String userId, @Query("postId") int postId);
 
 }

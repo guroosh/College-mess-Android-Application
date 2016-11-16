@@ -1,6 +1,7 @@
 package com.mallock.messiiitd.fragments.postWall;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,14 +21,17 @@ import android.widget.Toast;
 
 import com.lusfold.spinnerloading.SpinnerLoading;
 import com.mallock.messiiitd.DataSupplier;
+import com.mallock.messiiitd.MainActivity;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Comment;
 import com.mallock.messiiitd.models.Post;
+import com.mallock.messiiitd.retrofit.CommentPost;
 import com.mallock.messiiitd.retrofit.PostUserClass;
 import com.mallock.messiiitd.retrofit.WallService;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -150,9 +154,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 final EditText edit_comment = (EditText) v.findViewById(R.id.comment_et);
                 add_comment.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(final View view) {
                         // TODO: 11/17/2016 add comment POST
+                        CommentPost comment = new CommentPost();
+                        comment.setText(edit_comment.getText().toString());
+                        comment.setUserId(DataSupplier.getUserId());
+                        comment.setPostId(post.getPostId());
+                        WallService service = DataSupplier.getRetrofit().create(WallService.class);
+                        Call<Integer> call = service.addComment(comment);
+                        call.enqueue(new retrofit.Callback<Integer>() {
+                            @Override
+                            public void onResponse(Response<Integer> response, Retrofit retrofit) {
+                                Toast.makeText(view.getContext(), "DONE",Toast.LENGTH_SHORT).show();
+                            }
 
+                            @Override
+                            public void onFailure(Throwable t) {
+                                Log.e("RETROFIT ERROR: ", t.getMessage());
+                                Toast.makeText(view.getContext(), "RETROFIT ERROR: "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 builder.show();
