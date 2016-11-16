@@ -73,6 +73,11 @@ public class AddPostFragment extends DialogFragment {
 
             }
         });
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+            }
+        });
 
         upload_text.setOnClickListener(new View.OnClickListener() {
             @Override
