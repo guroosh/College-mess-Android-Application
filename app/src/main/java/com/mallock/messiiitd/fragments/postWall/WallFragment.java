@@ -54,6 +54,7 @@ public class WallFragment extends Fragment {
                 AddPostFragment make_post = new AddPostFragment();
                 FragmentManager fm = getActivity().getFragmentManager();
                 make_post.show(fm,"tag");
+
             }
         });
 
