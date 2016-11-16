@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.lusfold.spinnerloading.SpinnerLoading;
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.models.Comment;
 import com.mallock.messiiitd.models.Post;
 import com.mallock.messiiitd.retrofit.PostUserClass;
 import com.mallock.messiiitd.retrofit.WallService;
@@ -111,8 +114,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
                     @Override
                     public void onFailure(Throwable t) {
-                        Toast.makeText(context, "network error. Please try later",Toast.LENGTH_LONG)
-                                .show();
+                        Toast.makeText(context, "network error. Please try later",Toast.LENGTH_LONG).show();
                         Log.e(TAG, t.getMessage());
                     }
                 });
@@ -130,7 +132,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             @Override
             public void onClick(View v) {
 
-                // TODO: 13-10-2016 comment code goes here
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inflater.inflate(R.layout.comment_list_layout, null);
@@ -143,6 +144,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(mAdapter);
+                Button add_comment = (Button) v.findViewById(R.id.add_comment);
+                final EditText edit_comment = (EditText) v.findViewById(R.id.comment_et);
+                add_comment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    }
+                });
                 builder.show();
             }
         });

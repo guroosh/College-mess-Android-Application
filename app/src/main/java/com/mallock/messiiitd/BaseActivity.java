@@ -13,6 +13,7 @@ import android.widget.ImageView;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    public static final String baseURL = "http://192.168.55.70/mess/";
     public ProgressDialog progressDialog;
 
     @Override

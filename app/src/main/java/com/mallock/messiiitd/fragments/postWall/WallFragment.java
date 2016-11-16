@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mallock.messiiitd.BaseActivity;
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Post;
@@ -35,22 +37,30 @@ public class WallFragment extends Fragment {
 
     TextView errorText;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wall_layout, container, false);
         errorText = (TextView) view.findViewById(R.id.network_error);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         getPostsData(recyclerView);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 11/13/2016 code to make new post
-                // TODO: 11/13/2016 code to make new po
                 AddPostFragment make_post = new AddPostFragment();
                 FragmentManager fm = getActivity().getFragmentManager();
                 make_post.show(fm,"tag");
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //TODO: Refresh the list @akshat
+//                swipeRefreshLayout.setRefreshing(true);
             }
         });
 
@@ -71,7 +81,7 @@ public class WallFragment extends Fragment {
 
     private void getPostsData(final RecyclerView recyclerView) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.55.70/mess/")
+                .baseUrl(BaseActivity.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         WallService wallService = retrofit.create(WallService.class);

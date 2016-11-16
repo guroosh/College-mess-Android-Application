@@ -1,5 +1,6 @@
 package com.mallock.messiiitd.retrofit;
 
+import com.mallock.messiiitd.models.Comment;
 import com.mallock.messiiitd.models.Post;
 
 import java.util.HashMap;
@@ -22,6 +23,9 @@ public interface WallService {
 
     @POST("/addPost.php")
     Call<Integer> addPost(@Body Post post);
+
+    @POST("/addComment.php/")
+    Call<Integer> addComment(@Body Comment comment);
 
     @POST("/toggleLike.php")
     Call<Integer> toggleLike(@Body PostUserClass userPostMap);
