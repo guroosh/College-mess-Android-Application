@@ -78,7 +78,7 @@ public class DataSupplier {
             MenuItem q = new MenuItem();
             q.setItemName("Raita");
             list.add(q);
-        }else if (position == 2) {
+        } else if (position == 2) {
 
             MenuItem item1 = new MenuItem();
             item1.setItemName("Bread Pakora");
@@ -86,7 +86,7 @@ public class DataSupplier {
             MenuItem i1 = new MenuItem();
             i1.setItemName("Tea");
             list.add(i1);
-        }else if (position == 3) {
+        } else if (position == 3) {
             MenuItem item1 = new MenuItem();
             item1.setItemName("Roti");
             list.add(item1);
@@ -105,14 +105,18 @@ public class DataSupplier {
         return list;
     }
 
-    public static String getUserId(){
-        return "akshat140091";
+    public static String getUserId() {
+        return "akshat14009";
     }
 
     public static Retrofit getRetrofit() {
-        return  new Retrofit.Builder()
-                .baseUrl("http://192.168.55.70/mess/")
+        return new Retrofit.Builder()
+                .baseUrl(getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    public static String getBaseURL() {
+        return "http://192.168.55.70/mess/";
     }
 }
