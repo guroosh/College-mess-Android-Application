@@ -43,7 +43,7 @@
                     <ImageButton
                         android:id="@+id/button_hide"
                         android:layout_width="48dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_height="48dp"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/ic_hide" />

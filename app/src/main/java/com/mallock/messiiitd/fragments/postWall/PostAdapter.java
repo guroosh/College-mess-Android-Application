@@ -20,12 +20,10 @@ import com.lusfold.spinnerloading.SpinnerLoading;
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Post;
-import com.mallock.messiiitd.retrofit.PostUserClass;
 import com.mallock.messiiitd.retrofit.WallService;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -40,13 +38,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
     private static final String TAG = "PostAdapter";
     private final List<Post> posts;
-    Context context;
+    WallFragment fragment;
     Retrofit retrofit;
+    RecyclerView recyclerView;
 
-    public PostAdapter(List<Post> posts, Context context, Retrofit retrofit) {
+    public PostAdapter(List<Post> posts, WallFragment fragment, Retrofit retrofit, RecyclerView recyclerView) {
         this.posts = posts;
         this.retrofit = retrofit;
-        this.context = context;
+        this.fragment = fragment;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -62,14 +62,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         final Post post = posts.get(position);
         //todo: uncomment the following code, when url is supplied
         /*
-        Picasso.with(context)
+        Picasso.with(fragment)
                 .load(post.getUserImageUrl())
                 .into(holder.profileImage);
         */
         if (post.getImageURL() != null && !post.getImageURL().equals("")) {
             holder.postImage.setVisibility(View.VISIBLE);
             holder.loadingProgressBar.setVisibility(View.VISIBLE);
-            Picasso.with(context)
+            Picasso.with(fragment.getContext())
                     .load(post.getImageURL())
                     .error(R.drawable.ic_hide)
                     .into(holder.postImage, new Callback() {
@@ -97,8 +97,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         holder.hideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WallService wallService = retrofit.create(WallService.class);
-                Call<Integer> call = wallService.makeHidden(new PostUserClass(DataSupplier.getUserId(), post.getPostId()));
+                WallService wallService = DataSupplier.getRetrofit().create(WallService.class);
+                Call<Integer> call = wallService.makeHidden(DataSupplier.getUserId(), post.getPostId());
                 call.enqueue(new retrofit.Callback<Integer>() {
                     @Override
                     public void onResponse(Response<Integer> response, Retrofit retrofit) {
@@ -106,12 +106,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                             Log.e(TAG, "makeHidden returned 0");
                         }
                         holder.wholePost.setVisibility(View.GONE);
-
+                        fragment.refreshRecyclerView(recyclerView);
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-                        Toast.makeText(context, "network error. Please try later",Toast.LENGTH_LONG)
+                        Toast.makeText(fragment.getContext(), "network error. Please try later",Toast.LENGTH_LONG)
                                 .show();
                         Log.e(TAG, t.getMessage());
                     }
@@ -132,7 +132,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
                 // TODO: 13-10-2016 comment code goes here
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) fragment.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inflater.inflate(R.layout.comment_list_layout, null);
                 builder.setView(v);
                 builder.setCancelable(true);
@@ -157,10 +157,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     public int getItemCount() {
         return posts.size();
     }
-
-//    public Context getActivity() {
-//        return this.context;
-//    }
 
 
     public static class PostHolder extends RecyclerView.ViewHolder {

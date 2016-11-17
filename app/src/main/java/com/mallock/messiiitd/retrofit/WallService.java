@@ -23,9 +23,10 @@ public interface WallService {
     @POST("/addPost.php")
     Call<Integer> addPost(@Body Post post);
 
-    @POST("/toggleLike.php")
-    Call<Integer> toggleLike(@Body PostUserClass userPostMap);
+    @GET("/toggleLike.php")
+    Call<Integer> toggleLike(@Query("userId") String userId, @Query("postId") int postId);
 
-    @POST("/makeHidden.php")
-    Call<Integer> makeHidden(@Body PostUserClass userPostMap);
+    @GET("makeHidden.php/")
+    Call<Integer> makeHidden(@Query("userId") String userId, @Query("postId") int postId);
+
 }

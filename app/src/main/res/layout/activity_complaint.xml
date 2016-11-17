@@ -4,7 +4,7 @@
     android:id="@+id/activity_complaint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mallock.messiiitd.ComplaintActivity">
+    tools:fragment="com.mallock.messiiitd.ComplaintActivity">
 
     <TextView
         android:text="Complaints/suggestions"

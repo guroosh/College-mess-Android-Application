@@ -4,7 +4,7 @@
     android:id="@+id/activity_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mallock.messiiitd.FormActivity">
+    tools:fragment="com.mallock.messiiitd.FormActivity">
 
     <WebView
         android:id="@+id/webView"

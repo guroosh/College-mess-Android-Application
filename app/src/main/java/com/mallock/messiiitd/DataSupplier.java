@@ -9,6 +9,9 @@ import com.mallock.messiiitd.models.Post;
 
 import java.util.ArrayList;
 
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+
 /**
  * Created by Mallock on 13-10-2016.
  */
@@ -89,6 +92,7 @@ public class DataSupplier {
             list.add(item1);
             MenuItem i1 = new MenuItem();
             i1.setItemName("Chicken");
+
             list.add(i1);
             MenuItem q = new MenuItem();
             q.setItemName("Paneer");
@@ -102,6 +106,13 @@ public class DataSupplier {
     }
 
     public static String getUserId(){
-        return "akshat14009";
+        return "akshat140091";
+    }
+
+    public static Retrofit getRetrofit() {
+        return  new Retrofit.Builder()
+                .baseUrl("http://192.168.55.70/mess/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 }

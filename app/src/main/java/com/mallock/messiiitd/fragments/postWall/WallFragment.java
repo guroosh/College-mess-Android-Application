@@ -18,6 +18,7 @@ import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Post;
 import com.mallock.messiiitd.retrofit.WallService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -34,13 +35,14 @@ public class WallFragment extends Fragment {
 
     TextView errorText;
     RecyclerView recyclerView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wall_layout, container, false);
         errorText = (TextView) view.findViewById(R.id.network_error);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        getPostsData(recyclerView);
+        refreshRecyclerView(recyclerView);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +56,7 @@ public class WallFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    fab.animate().translationY(fab.getHeight()+100).alpha(1.0f);
+                    fab.animate().translationY(fab.getHeight() + 100).alpha(1.0f);
                 } else {
                     fab.animate().translationY(0);
                 }
@@ -64,8 +66,8 @@ public class WallFragment extends Fragment {
     }
 
 
-    private void getPostsData(final RecyclerView recyclerView) {
-        Retrofit retrofit = new Retrofit.Builder()
+    public void refreshRecyclerView(final RecyclerView recyclerView) {
+        final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.55.70/mess/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -73,13 +75,19 @@ public class WallFragment extends Fragment {
         Call<List<Post>> call = wallService.getPosts(DataSupplier.getUserId());
         call.enqueue(new Callback<List<Post>>() {
             @Override
-            public void onResponse(Response<List<Post>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<Post>> response, Retrofit r) {
                 errorText.setVisibility(View.GONE);
                 List<Post> postList = response.body();
+                List<Post> displayList = new ArrayList<Post>();
+                for (Post post : postList) {
+                    if (post.getHidden() != 1) {
+                        displayList.add(post);
+                    }
+                }
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                PostAdapter mAdapter = new PostAdapter(postList, getContext(),retrofit);
+                PostAdapter mAdapter = new PostAdapter(displayList, WallFragment.this, retrofit, recyclerView);
                 recyclerView.setAdapter(mAdapter);
             }
 
