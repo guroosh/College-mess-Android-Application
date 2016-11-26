@@ -22,6 +22,7 @@ import com.mallock.messiiitd.models.Post;
 import com.mallock.messiiitd.retrofit.WallService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit.Call;
@@ -93,12 +94,13 @@ public class WallFragment extends Fragment {
             public void onResponse(Response<List<Post>> response, Retrofit r) {
                 errorText.setVisibility(View.GONE);
                 List<Post> postList = response.body();
-                List<Post> displayList = new ArrayList<Post>();
+                List<Post> displayList = new ArrayList<>();
                 for (Post post : postList) {
                     if (post.getHidden() != 1) {
                         displayList.add(post);
                     }
                 }
+                Collections.reverse(displayList);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
