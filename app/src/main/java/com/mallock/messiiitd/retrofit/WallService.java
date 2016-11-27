@@ -21,8 +21,8 @@ public interface WallService {
     @GET("getPosts.php/")
     Call<List<Post>> getPosts(@Query("userId") String userId);
 
-    @POST("/addPost.php")
-    Call<Integer> addPost(@Body Post post);
+    @POST("addPost.php")
+    Call<Integer> addPost(@Body PostPost post);
 
     @GET("makeHidden.php/")
     Call<Integer> makeHidden(@Query("userId") String userId, @Query("postId") int postId);

@@ -17,13 +17,20 @@ import com.mallock.messiiitd.fragments.postWall.WallFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+/**
+ * TODO:
+ * 1. NETWORK CHECK BEFORE CALL
+ * 2. PERMISSION CHECK BEFORE STORAGE
+ * 3. GETaCTIVITY RETURNING NULL AT TIMES
+ * 4. splash screen
+ */
 public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        this.mActivity = this;
         //Adding toolbar to activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -65,8 +72,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.form:
                 Intent i1 = new Intent(this, FormActivity.class);
                 startActivity(i1);

@@ -106,9 +106,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 call.enqueue(new retrofit.Callback<Integer>() {
                     @Override
                     public void onResponse(Response<Integer> response, Retrofit retrofit) {
-
-                        Toast.makeText(fragment.getContext(), "An error has occured. Please try later",Toast.LENGTH_LONG)
-                                .show();
                         holder.wholePost.setVisibility(View.GONE);
                         fragment.refreshRecyclerView(recyclerView);
                     }
@@ -181,9 +178,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         });
     }
 
-    // TODO: 13-10-2016 return whether the post has been liked by the using user or not
+    /**
+     * returns whether the post has been liked by the user
+     * @param post
+     * @return true, if the post is liked, false otherwise
+     */
     private boolean isLiked(Post post) {
-        return false;
+        return post.getLiked()==1;
     }
 
     @Override

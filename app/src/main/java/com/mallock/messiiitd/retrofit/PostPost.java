@@ -9,7 +9,6 @@ public class PostPost {
     String text;
     String imgURL;
     String userImgURL;
-    String date;
 
     public String getUserId() {
         return userId;
@@ -43,11 +42,4 @@ public class PostPost {
         this.userImgURL = userImgURL;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 }

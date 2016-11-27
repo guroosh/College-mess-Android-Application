@@ -12,7 +12,7 @@ import android.widget.ImageView;
  * Created by Akshat on 09-06-2016.
  */
 public class BaseActivity extends AppCompatActivity {
-
+    AppCompatActivity mActivity;
     public ProgressDialog progressDialog;
 
     @Override

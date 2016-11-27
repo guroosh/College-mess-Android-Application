@@ -1,6 +1,7 @@
 package com.mallock.messiiitd.fragments.postWall;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,9 +19,11 @@ import android.widget.TextView;
 import com.mallock.messiiitd.BaseActivity;
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.misc.OnCloseListener;
 import com.mallock.messiiitd.models.Post;
 import com.mallock.messiiitd.retrofit.WallService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +37,7 @@ import retrofit.Retrofit;
  * Created by Mallock on 06-10-2016.
  */
 
-public class WallFragment extends Fragment {
+public class WallFragment extends Fragment implements Serializable{
 
     TextView errorText;
     RecyclerView recyclerView;
@@ -51,9 +54,15 @@ public class WallFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddPostFragment make_post = new AddPostFragment();
+                AddPostFragment addPostFragment = new AddPostFragment();
+                addPostFragment.setListener(new OnCloseListener() {
+                    @Override
+                    public void onClose(Context context) {
+                        refreshRecyclerView(recyclerView);
+                    }
+                });
                 FragmentManager fm = getActivity().getFragmentManager();
-                make_post.show(fm,"tag");
+                addPostFragment.show(fm,"tag");
 
             }
         });
