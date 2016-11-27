@@ -43,11 +43,11 @@
         android:scrollbars="vertical"
         android:id="@+id/content" />
 
+
     <Button
         android:text="Send mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/send"
-
         android:layout_alignParentBottom="true" />
 </RelativeLayout>

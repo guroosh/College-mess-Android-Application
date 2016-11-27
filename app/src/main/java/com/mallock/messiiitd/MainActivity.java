@@ -23,6 +23,7 @@ import com.roughike.bottombar.OnTabSelectListener;
  * 2. PERMISSION CHECK BEFORE STORAGE
  * 3. GETaCTIVITY RETURNING NULL AT TIMES
  * 4. splash screen
+ * 5. Polling
  */
 public class MainActivity extends BaseActivity {
 
