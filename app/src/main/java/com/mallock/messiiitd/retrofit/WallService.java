@@ -27,10 +27,10 @@ public interface WallService {
     @GET("makeHidden.php/")
     Call<Integer> makeHidden(@Query("userId") String userId, @Query("postId") int postId);
 
-    @POST("/addComment.php/")
-    Call<Integer> addComment(@Body Comment comment);
+    @POST("addComment.php/")
+    Call<Integer> addComment(@Body CommentPost comment);
 
-    @GET("/toggleLike.php")
+    @GET("toggleLike.php/")
     Call<Integer> toggleLike(@Query("userId") String userId, @Query("postId") int postId);
 
 }

@@ -4,21 +4,9 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="this is menu layout"-->
-        <!--/>-->
-
-    <!--<com.lusfold.spinnerloading.SpinnerLoading-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_height="wrap_content" />-->
     <android.support.v4.view.ViewPager
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
-        android:id="@+id/menupager"
-
-    />
+        android:id="@+id/menupager" />
 
 </RelativeLayout>

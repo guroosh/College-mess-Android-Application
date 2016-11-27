@@ -8,25 +8,36 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.models.Menu;
+import com.mallock.messiiitd.retrofit.MenuService;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 public class ViewPagerFragment extends Fragment {
 
-    ArrayList<MenuItem> menuItems;
-    int position;
+//    ArrayList<MenuItem> menuItems;
+    ArrayList<Menu.Item> menuItems;
+    String title;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public static ViewPagerFragment newInstance(int position) {
+    public static ViewPagerFragment newInstance(ArrayList<Menu.Item> items, String title) {
 
         Bundle args = new Bundle();
         ViewPagerFragment fragment = new ViewPagerFragment();
-        fragment.position = position;
+        fragment.menuItems = items;
+        fragment.title = title;
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,21 +48,14 @@ public class ViewPagerFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.menulayout2, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        menuItems = DataSupplier.getMenuForDay(position);
-        mAdapter = new MenuAdapter(menuItems);
+        TextView menu_title = (TextView) rootView.findViewById(R.id.menu_title);
+        menu_title.setText(title);
+        mAdapter = new MenuAdapter(menuItems, title);
         mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
-        //return super.onCreateView(inflater, container, savedInstanceState);
     }
 }
