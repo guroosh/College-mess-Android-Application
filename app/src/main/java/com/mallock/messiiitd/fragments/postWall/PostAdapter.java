@@ -102,6 +102,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         holder.likeText.setText(post.getUpVotes() + " Likes");
         if (isLiked(post)) {
             holder.likeText.setTextColor(Color.BLUE);
+        }else{
+            holder.likeText.setTextColor(Color.BLACK);
         }
         holder.hideButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,8 +234,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         ImageView profileImage, postImage;
         TextView dateText, usernameText, postBodyText, likeText, commentText;
         SpinnerLoading loadingProgressBar;
-        ImageButton hideButton;
-        LinearLayout like, comment;
+        LinearLayout like, comment, hideButton;
 
         public PostHolder(View itemView) {
             super(itemView);
@@ -246,7 +247,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             postBodyText = (TextView) itemView.findViewById(R.id.text_post_body);
             likeText = (TextView) itemView.findViewById(R.id.text_like);
             commentText = (TextView) itemView.findViewById(R.id.text_comment);
-            hideButton = (ImageButton) itemView.findViewById(R.id.button_hide);
+            hideButton = (LinearLayout) itemView.findViewById(R.id.button_hide);
             like = (LinearLayout) itemView.findViewById(R.id.layout_like);
             comment = (LinearLayout) itemView.findViewById(R.id.layout_comment);
         }

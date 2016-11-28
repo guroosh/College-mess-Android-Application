@@ -29,7 +29,6 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(
                         R.color.actionbar_color)));
-
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(false);
         getSupportActionBar().setIcon(R.drawable.ic_app);

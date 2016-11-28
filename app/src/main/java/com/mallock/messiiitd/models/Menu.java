@@ -12,37 +12,6 @@ public class Menu {
     ArrayList<Item> lunch = new ArrayList<>();
     ArrayList<Item> snacks = new ArrayList<>();
     ArrayList<Item> dinner = new ArrayList<>();
-
-    public static class Item {
-        String name;
-        int up;
-        int down;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getUpVote() {
-            return up;
-        }
-
-        public void setUpVote(int upVote) {
-            this.up = upVote;
-        }
-
-        public int getDownVote() {
-            return down;
-        }
-
-        public void setDownVote(int downVote) {
-            this.down = downVote;
-        }
-    }
-
     public int getIndex() {
         return index;
     }
@@ -82,4 +51,36 @@ public class Menu {
     public void setDinner(ArrayList<Item> dinner) {
         this.dinner = dinner;
     }
+
+
+    public static class Item {
+        String name;
+        int up;
+        int down;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getUpVote() {
+            return up;
+        }
+
+        public void setUpVote(int upVote) {
+            this.up = upVote;
+        }
+
+        public int getDownVote() {
+            return down;
+        }
+
+        public void setDownVote(int downVote) {
+            this.down = downVote;
+        }
+    }
+
 }
