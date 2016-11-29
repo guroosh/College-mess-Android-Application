@@ -8,10 +8,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -176,6 +178,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                     }
                 });
                 final AlertDialog dialog = builder.show();
+//                DisplayMetrics displaymetrics = new DisplayMetrics();
+//                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//                int height = displaymetrics.heightPixels;
+//                int width = displaymetrics.widthPixels;
+//                dialog.getWindow().setLayout(600, 400);
                 CommentAdapter mAdapter = new CommentAdapter(post.getComments());
                 final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView2);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(v.getContext());

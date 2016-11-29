@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.FullMenuActivity;
+import com.mallock.messiiitd.NetworkUtils;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Menu;
 import com.mallock.messiiitd.retrofit.MenuService;
@@ -47,11 +49,18 @@ public class MenuFragment extends Fragment {
                 startActivity(new Intent(getContext(), FullMenuActivity.class));
             }
         });
+        final TextView errorText = (TextView) view.findViewById(R.id.network_error);
+        if(!NetworkUtils.isActive(getContext())){
+            errorText.setVisibility(View.VISIBLE);
+        }else{
+            errorText.setVisibility(View.GONE);
+        }
         MenuService service = DataSupplier.getRetrofit().create(MenuService.class);
         final Call<Menu> call = service.getMenu();
         call.enqueue(new retrofit.Callback<Menu>() {
             @Override
             public void onResponse(Response<Menu> response, Retrofit retrofit) {
+                errorText.setVisibility(View.GONE);
                 Menu menu;
                 menu = response.body();
 
@@ -62,6 +71,7 @@ public class MenuFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
+                errorText.setVisibility(View.VISIBLE);
                 try {
                     Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
                 } catch (NullPointerException e) {
