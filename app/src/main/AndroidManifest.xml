@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".FormActivity" />
         <activity android:name=".ComplaintActivity" />
-        <activity android:name=".FullMenuActivity"></activity>
+        <activity android:name=".FullMenuActivity" />
     </application>
 
 </manifest>

@@ -54,6 +54,7 @@ public class MenuFragment extends Fragment {
             public void onResponse(Response<Menu> response, Retrofit retrofit) {
                 Menu menu;
                 menu = response.body();
+
                 mPagerAdapter = new ScreenSlidePagerAdapter(getActivity().getSupportFragmentManager(), menu);
                 mPager.setAdapter(mPagerAdapter);
                 mPager.setCurrentItem(menu.getIndex());

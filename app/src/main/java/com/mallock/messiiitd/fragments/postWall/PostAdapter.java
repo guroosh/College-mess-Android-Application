@@ -136,17 +136,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 call.enqueue(new retrofit.Callback<Integer>() {
                     @Override
                     public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                        if (holder.likeText.getTextColors().equals(Color.BLACK)) {
+                        if (holder.likeText.getCurrentTextColor() == Color.BLACK) {
+                            post.setUpVotes(post.getUpVotes() + 1);
                             holder.likeText.setTextColor(Color.BLUE);
+                            holder.likeText.setText(post.getUpVotes() + " Likes");
                         } else {
+                            post.setUpVotes(post.getUpVotes() - 1);
                             holder.likeText.setTextColor(Color.BLACK);
+                            holder.likeText.setText(post.getUpVotes() + " Likes");
                         }
                         //fragment.refreshRecyclerView(recyclerView);
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-                        Toast.makeText(fragment.getContext(), "network error. Please try later", Toast.LENGTH_LONG)
+                        Toast.makeText(fragment.getContext(), "network error. Please try later---> "+t.getMessage(), Toast.LENGTH_LONG)
                                 .show();
                         Log.e(TAG, t.getMessage());
                     }

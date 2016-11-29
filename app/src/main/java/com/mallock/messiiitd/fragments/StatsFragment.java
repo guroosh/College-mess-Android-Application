@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -17,9 +18,16 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.retrofit.LikedFoodGet;
+import com.mallock.messiiitd.retrofit.StatsService;
 
 import java.util.ArrayList;
+
+import retrofit.Call;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by Mallock on 06-10-2016.
@@ -31,6 +39,9 @@ public class StatsFragment extends Fragment {
     private static final String WORST_FOODS = "worst items";
     private static final int CHART_TYPE_LINE = 0;
     private static final int CHART_TYPE_PIE = 1;
+    ArrayList<String> upVoteLabel = new ArrayList<>();
+    ArrayList<String> downVoteLabel = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -40,6 +51,8 @@ public class StatsFragment extends Fragment {
         //entries
 
         //labels
+
+
         ArrayList<String> labelsFood = new ArrayList<>();
         labelsFood.add("Brownies");
         labelsFood.add("Ice cream");
@@ -62,17 +75,17 @@ public class StatsFragment extends Fragment {
         setLineChart(lineDislikes, getRandomData(10), "Line chart: dislikes", labelsMonths, CHART_TYPE_LINE);
 
 
-
-        PieChart pieLikes = (PieChart) view.findViewById(R.id.pie_chart_likes);
-        setLineChart(pieLikes, getRandomData(5), "Pie chart: likes", labelsFood, CHART_TYPE_PIE);
+        getMostLikedData(5);
+        getLeastLikeData(5);
 
 
         PieChart pieDislikes = (PieChart) view.findViewById(R.id.pie_chart_dislikes);
         setLineChart(pieDislikes, getRandomData(5), "Pie chart: Dislikes", labelsFood, CHART_TYPE_PIE);
 
-
         return view;
     }
+
+
 
     private Chart setLineChart(Chart chart, ArrayList<Entry> data, String description, ArrayList<String> labels, int chartType) {
         String string;
@@ -126,6 +139,57 @@ public class StatsFragment extends Fragment {
             default:
                 return null;
         }
+    }
+
+    private void getLeastLikeData(final int size) {
+        final ArrayList<Entry> entry = new ArrayList<>();
+        StatsService service = DataSupplier.getRetrofit().create(StatsService.class);
+        final Call<LikedFoodGet> call = service.getLeastLikedFood();
+        call.enqueue(new retrofit.Callback<LikedFoodGet>() {
+
+            @Override
+            public void onResponse(Response<LikedFoodGet> response, Retrofit retrofit) {
+                LikedFoodGet food = response.body();
+                for(int i =0; i<size ; i++)
+                {
+                    entry.add(new Entry(food.getCount().get(i),i));
+                    downVoteLabel.add(food.getName().get(i));
+                }
+                PieChart pieDislikes = (PieChart) getActivity().findViewById(R.id.pie_chart_dislikes);
+                pieDislikes.getLegend().setEnabled(false);
+                setLineChart(pieDislikes, entry, "Pie chart: likes", downVoteLabel, CHART_TYPE_PIE);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void getMostLikedData(final int size) {
+        final ArrayList<Entry> entry = new ArrayList<>();
+        StatsService service = DataSupplier.getRetrofit().create(StatsService.class);
+        final Call<LikedFoodGet> call = service.getMostLikedFood();
+        call.enqueue(new retrofit.Callback<LikedFoodGet>() {
+
+            @Override
+            public void onResponse(Response<LikedFoodGet> response, Retrofit retrofit) {
+                LikedFoodGet food = response.body();
+                for(int i =0; i<size ; i++)
+                {
+                    entry.add(new Entry(food.getCount().get(i),i));
+                    upVoteLabel.add(food.getName().get(i));
+                }
+                PieChart pieLikes = (PieChart) getActivity().findViewById(R.id.pie_chart_likes);
+                pieLikes.getLegend().setEnabled(false);
+                setLineChart(pieLikes, entry, "Pie chart: likes", upVoteLabel, CHART_TYPE_PIE);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private ArrayList<Entry> getRandomData(int size) {
