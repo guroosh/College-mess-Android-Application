@@ -102,6 +102,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         holder.likeText.setText(post.getUpVotes() + " Likes");
         if (isLiked(post)) {
             holder.likeText.setTextColor(Color.BLUE);
+        }else{
+            holder.likeText.setTextColor(Color.BLACK);
         }
         holder.hideButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,10 +136,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 call.enqueue(new retrofit.Callback<Integer>() {
                     @Override
                     public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                        if (holder.likeText.getTextColors().equals(Color.WHITE)) {
+                        if (holder.likeText.getTextColors().equals(Color.BLACK)) {
                             holder.likeText.setTextColor(Color.BLUE);
                         } else {
-                            holder.likeText.setTextColor(Color.WHITE);
+                            holder.likeText.setTextColor(Color.BLACK);
                         }
                         //fragment.refreshRecyclerView(recyclerView);
                     }

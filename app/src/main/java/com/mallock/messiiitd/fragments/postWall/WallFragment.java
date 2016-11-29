@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.mallock.messiiitd.BaseActivity;
 import com.mallock.messiiitd.DataSupplier;
+import com.mallock.messiiitd.NetworkUtils;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.misc.OnCloseListener;
 import com.mallock.messiiitd.models.Post;
@@ -38,11 +39,12 @@ import retrofit.Retrofit;
  * Created by Mallock on 06-10-2016.
  */
 
-public class WallFragment extends Fragment implements Serializable{
+public class WallFragment extends Fragment implements Serializable {
 
     TextView errorText;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class WallFragment extends Fragment implements Serializable{
                     }
                 });
                 FragmentManager fm = getActivity().getFragmentManager();
-                addPostFragment.show(fm,"tag");
+                addPostFragment.show(fm, "tag");
 
             }
         });
@@ -92,6 +94,12 @@ public class WallFragment extends Fragment implements Serializable{
 
 
     public void refreshRecyclerView(final RecyclerView recyclerView) {
+        if (!NetworkUtils.isActive(getContext())) {
+            errorText.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            errorText.setVisibility(View.GONE);
+        }
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DataSupplier.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -121,7 +129,6 @@ public class WallFragment extends Fragment implements Serializable{
             public void onFailure(Throwable t) {
                 Log.e("RETROFIT ERROR: ", t.getMessage());
                 errorText.setVisibility(View.VISIBLE);
-
             }
         });
     }
