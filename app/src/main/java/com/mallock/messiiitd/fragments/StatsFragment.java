@@ -2,6 +2,7 @@ package com.mallock.messiiitd.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.retrofit.LikedFoodGet;
 import com.mallock.messiiitd.retrofit.StatsService;
+import com.mallock.messiiitd.retrofit.TotalLikesGet;
 
 import java.util.ArrayList;
 
@@ -41,7 +43,7 @@ public class StatsFragment extends Fragment {
     private static final int CHART_TYPE_PIE = 1;
     ArrayList<String> upVoteLabel = new ArrayList<>();
     ArrayList<String> downVoteLabel = new ArrayList<>();
-
+    ArrayList<String> labelsMonths;
 
     @Nullable
     @Override
@@ -53,38 +55,22 @@ public class StatsFragment extends Fragment {
         //labels
 
 
-        ArrayList<String> labelsFood = new ArrayList<>();
-        labelsFood.add("Brownies");
-        labelsFood.add("Ice cream");
-        labelsFood.add("Rajma");
-        labelsFood.add("Chole");
-        labelsFood.add("Raita");
-
         String[] mMonths = new String[]{
-                "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt"
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         };
-        ArrayList<String> labelsMonths = new ArrayList<String>();
+        labelsMonths = new ArrayList<>();
         for (String month : mMonths) {
             labelsMonths.add(month);
         }
 
-        LineChart lineLikes = (LineChart) view.findViewById(R.id.line_chart_likes);
-        setLineChart(lineLikes, getRandomData(10), "Line chart: likes", labelsMonths, CHART_TYPE_LINE);
 
-        LineChart lineDislikes = (LineChart) view.findViewById(R.id.line_chart_dislikes);
-        setLineChart(lineDislikes, getRandomData(10), "Line chart: dislikes", labelsMonths, CHART_TYPE_LINE);
-
-
+        getTotalLikes();
+        getTotalDislikes();
         getMostLikedData(5);
         getLeastLikeData(5);
 
-
-        PieChart pieDislikes = (PieChart) view.findViewById(R.id.pie_chart_dislikes);
-        setLineChart(pieDislikes, getRandomData(5), "Pie chart: Dislikes", labelsFood, CHART_TYPE_PIE);
-
         return view;
     }
-
 
 
     private Chart setLineChart(Chart chart, ArrayList<Entry> data, String description, ArrayList<String> labels, int chartType) {
@@ -120,10 +106,6 @@ public class StatsFragment extends Fragment {
                 LineChart lineChart = (LineChart) chart;
                 LineDataSet dataSet2 = new LineDataSet(data, string);
                 dataSet2.setColor(Color.BLUE);
-//                dataSet2.setDrawCubic(true);
-//                dataSet2.setHighLightColor(Color.BLUE);
-//                dataSet2.setHighlightEnabled(false);
-//                dataSet2.setCubicIntensity(0.1f);
                 dataSet2.setDrawValues(false);
                 dataSet2.setFillColor(Color.RED);
                 dataSet2.setDrawFilled(true);
@@ -141,18 +123,71 @@ public class StatsFragment extends Fragment {
         }
     }
 
+    private void getTotalLikes() {
+        ArrayList<Entry> entry;
+        entry = getRandomData(10);
+        StatsService service = DataSupplier.getRetrofit().create(StatsService.class);
+        Call<TotalLikesGet> call = service.getTotalLikes();
+        final ArrayList<Entry> finalEntry = entry;
+        call.enqueue(new retrofit.Callback<TotalLikesGet>() {
+
+            @Override
+            public void onResponse(Response<TotalLikesGet> response, Retrofit retrofit) {
+                TotalLikesGet data = response.body();
+                finalEntry.add(new Entry(data.getCount(), 10));
+                makeLineChart2();
+            }
+
+            private void makeLineChart2() {
+                LineChart lineLikes = (LineChart) getActivity().findViewById(R.id.line_chart_likes);
+                setLineChart(lineLikes, finalEntry, "Line chart: likes", labelsMonths, CHART_TYPE_LINE);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getTotalDislikes() {
+        ArrayList<Entry> entry;
+        entry = getRandomData(10);
+        StatsService service = DataSupplier.getRetrofit().create(StatsService.class);
+        Call<TotalLikesGet> call = service.getTotalDislikes();
+        final ArrayList<Entry> finalEntry = entry;
+        call.enqueue(new retrofit.Callback<TotalLikesGet>() {
+            @Override
+            public void onResponse(Response<TotalLikesGet> response, Retrofit retrofit) {
+                TotalLikesGet data = response.body();
+                finalEntry.add(new Entry(data.getCount(), 10));
+                makeLineChart1();
+            }
+
+            private void makeLineChart1() {
+                LineChart lineDislikes = (LineChart) getActivity().findViewById(R.id.line_chart_dislikes);
+                setLineChart(lineDislikes, finalEntry, "Line chart: dislikes", labelsMonths, CHART_TYPE_LINE);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void getLeastLikeData(final int size) {
-        final ArrayList<Entry> entry = new ArrayList<>();
+
         StatsService service = DataSupplier.getRetrofit().create(StatsService.class);
         final Call<LikedFoodGet> call = service.getLeastLikedFood();
         call.enqueue(new retrofit.Callback<LikedFoodGet>() {
 
             @Override
             public void onResponse(Response<LikedFoodGet> response, Retrofit retrofit) {
+                ArrayList<Entry> entry= new ArrayList<>();
                 LikedFoodGet food = response.body();
-                for(int i =0; i<size ; i++)
-                {
-                    entry.add(new Entry(food.getCount().get(i),i));
+                for (int i = 0; i < size; i++) {
+                    entry.add(new Entry(food.getCount().get(i), i));
                     downVoteLabel.add(food.getName().get(i));
                 }
                 PieChart pieDislikes = (PieChart) getActivity().findViewById(R.id.pie_chart_dislikes);
@@ -160,24 +195,25 @@ public class StatsFragment extends Fragment {
                 setLineChart(pieDislikes, entry, "Pie chart: likes", downVoteLabel, CHART_TYPE_PIE);
             }
 
+
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void getMostLikedData(final int size) {
-        final ArrayList<Entry> entry = new ArrayList<>();
         StatsService service = DataSupplier.getRetrofit().create(StatsService.class);
         final Call<LikedFoodGet> call = service.getMostLikedFood();
         call.enqueue(new retrofit.Callback<LikedFoodGet>() {
 
             @Override
             public void onResponse(Response<LikedFoodGet> response, Retrofit retrofit) {
+                ArrayList<Entry> entry = new ArrayList<>();
                 LikedFoodGet food = response.body();
-                for(int i =0; i<size ; i++)
-                {
-                    entry.add(new Entry(food.getCount().get(i),i));
+                for (int i = 0; i < size; i++) {
+                    entry.add(new Entry(food.getCount().get(i), i));
                     upVoteLabel.add(food.getName().get(i));
                 }
                 PieChart pieLikes = (PieChart) getActivity().findViewById(R.id.pie_chart_likes);
@@ -187,7 +223,7 @@ public class StatsFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             }
         });
     }

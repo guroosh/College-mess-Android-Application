@@ -15,6 +15,6 @@ import okhttp3.MultipartBody;
 
 public interface FileUploadService {
     @Multipart
-    @POST("upload")
+    @POST("imageUpload.php/")
     Call<String> upload(@Part("file") MultipartBody.Part file);
 }

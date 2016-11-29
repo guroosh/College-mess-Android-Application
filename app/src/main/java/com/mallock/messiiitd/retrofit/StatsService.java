@@ -12,5 +12,9 @@ public interface StatsService {
     @GET("getLeastLikedFood.php/")
     Call<LikedFoodGet> getLeastLikedFood();
 
+    @GET("getTotalLikes.php/")
+    Call<TotalLikesGet> getTotalLikes();
 
+    @GET("getTotalDislikes.php/")
+    Call<TotalLikesGet> getTotalDislikes();
 }

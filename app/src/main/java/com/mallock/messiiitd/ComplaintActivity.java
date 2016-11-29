@@ -33,7 +33,7 @@ public class ComplaintActivity extends AppCompatActivity {
         sendIntent.setType("plain/text");
         sendIntent.setData(Uri.parse("chaudhary14032@iiitd.ac.in"));
         sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "chaudhary14032@iiitd.ac.in" });
+//        sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "chaudhary14032@iiitd.ac.in" });
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         sendIntent.putExtra(Intent.EXTRA_TEXT, body);
         startActivityForResult(sendIntent,CONTEXT_INCLUDE_CODE);

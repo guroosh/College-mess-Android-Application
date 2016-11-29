@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         setToolBarChild();
 
+        permissionCheck();
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
