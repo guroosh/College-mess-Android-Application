@@ -114,6 +114,7 @@ public class MenuAdapter extends RecyclerView.Adapter<ViewHolder> {
                 downVotePost.setName(item.getName());
                 MenuService service = DataSupplier.getRetrofit().create(MenuService.class);
                 final ProgressDialog dialog = new ProgressDialog(context);
+                dialog.setCancelable(false);
                 dialog.setMessage("Sending your rating...");
                 dialog.show();
                 Call<Integer> call = service.menuDownVote(downVotePost);

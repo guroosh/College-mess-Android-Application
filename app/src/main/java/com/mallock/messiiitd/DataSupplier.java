@@ -31,4 +31,8 @@ public class DataSupplier {
     public static String getBaseURL() {
         return "http://192.168.55.70/mess/";
     }
+
+    public static String getImageURL() {
+        return "http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg";
+    }
 }

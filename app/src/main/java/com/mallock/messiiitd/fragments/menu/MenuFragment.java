@@ -1,5 +1,6 @@
 package com.mallock.messiiitd.fragments.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.mallock.messiiitd.DataSupplier;
+import com.mallock.messiiitd.FullMenuActivity;
 import com.mallock.messiiitd.R;
 import com.mallock.messiiitd.models.Menu;
 import com.mallock.messiiitd.retrofit.MenuService;
@@ -37,7 +40,13 @@ public class MenuFragment extends Fragment {
         View view = inflater.from(getContext())
                 .inflate(R.layout.menulayout, container, false);
         mPager = (ViewPager) view.findViewById(R.id.menupager);
-
+        Button button = (Button) view.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), FullMenuActivity.class));
+            }
+        });
         MenuService service = DataSupplier.getRetrofit().create(MenuService.class);
         final Call<Menu> call = service.getMenu();
         call.enqueue(new retrofit.Callback<Menu>() {
