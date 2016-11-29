@@ -1,5 +1,6 @@
 package com.mallock.messiiitd.fragments.menu;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.mallock.messiiitd.DataSupplier;
 import com.mallock.messiiitd.R;
+import com.mallock.messiiitd.fragments.menu.menuUtils.MenuUtils;
 import com.mallock.messiiitd.models.Menu;
 import com.mallock.messiiitd.retrofit.DownVotePost;
 import com.mallock.messiiitd.retrofit.MenuService;
@@ -52,33 +54,51 @@ public class MenuAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset.get(position).getName());
+        final Menu.Item item = mDataset.get(position);
+        holder.mTextView.setText(item.getName());
         holder.up_count.setText(mDataset.get(position).getUpVote() + "");
+        if (MenuUtils.isUpvoted(item.getName(), context)) {
+            holder.up_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.like_green));
+        }
         holder.down_count.setText(mDataset.get(position).getDownVote() + "");
+        if (MenuUtils.isDownvoted(item.getName(), context)) {
+            holder.down_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.unlike_red));
+        }
         holder.up_thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 current_up_votes = mDataset.get(position).getUpVote();
-                // TODO: 27-11-2016 increase in backend
                 UpVotePost upVotePost = new UpVotePost();
-                upVotePost.setFlag(1);
-                upVotePost.setName(mDataset.get(position).getName());
+                int flag = MenuUtils.isUpvoted(item.getName(), context) ? -1 : 1;
+                upVotePost.setFlag(flag);
+                upVotePost.setName(item.getName());
                 MenuService service = DataSupplier.getRetrofit().create(MenuService.class);
+                final ProgressDialog dialog = new ProgressDialog(context);
+                dialog.setMessage("Sending your rating...");
+                dialog.show();
                 Call<Integer> call = service.menuUpVote(upVotePost);
                 call.enqueue(new retrofit.Callback<Integer>() {
 
                     @Override
                     public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                        current_up_votes++;
+                        MenuUtils.toggleUpvoted(item.getName(), context);
+                        if (MenuUtils.isUpvoted(item.getName(), context)) {
+                            holder.up_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.like_green));
+                            current_up_votes++;
+                        } else {
+                            current_up_votes--;
+                            holder.up_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.like));
+                        }
                         mDataset.get(position).setUpVote(current_up_votes);
-                        holder.up_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.like_green));
                         holder.up_count.setText(current_up_votes + "");
+                        dialog.hide();
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
                         Log.e("RETROFIT ERROR: ", t.getMessage());
                         Toast.makeText(context, "RETROFIT ERROR: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.hide();
                     }
                 });
             }
@@ -89,24 +109,36 @@ public class MenuAdapter extends RecyclerView.Adapter<ViewHolder> {
                 current_down_votes = mDataset.get(position).getDownVote();
                 // TODO: 27-11-2016 decrease in backend
                 DownVotePost downVotePost = new DownVotePost();
-                downVotePost.setFlag(1);
-                downVotePost.setName(mDataset.get(position).getName());
+                int flag = MenuUtils.isDownvoted(item.getName(), context) ? -1 : 1;
+                downVotePost.setFlag(flag);
+                downVotePost.setName(item.getName());
                 MenuService service = DataSupplier.getRetrofit().create(MenuService.class);
+                final ProgressDialog dialog = new ProgressDialog(context);
+                dialog.setMessage("Sending your rating...");
+                dialog.show();
                 Call<Integer> call = service.menuDownVote(downVotePost);
                 call.enqueue(new retrofit.Callback<Integer>() {
 
                     @Override
                     public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                        current_down_votes++;
+                        MenuUtils.toggleDownvoted(item.getName(), context);
+                        if (MenuUtils.isDownvoted(item.getName(), context)) {
+                            current_down_votes++;
+                            holder.down_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.unlike_red));
+                        } else {
+                            current_down_votes--;
+                            holder.down_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.unlike));
+                        }
                         mDataset.get(position).setDownVote(current_down_votes);
-                        holder.down_thumb.setImageDrawable(context.getResources().getDrawable(R.drawable.unlike_red));
                         holder.down_count.setText(current_down_votes + "");
+                        dialog.hide();
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
                         Log.e("RETROFIT ERROR: ", t.getMessage());
                         Toast.makeText(context, "RETROFIT ERROR: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.hide();
                     }
                 });
 

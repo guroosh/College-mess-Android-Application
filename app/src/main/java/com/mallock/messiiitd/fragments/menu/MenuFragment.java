@@ -52,7 +52,11 @@ public class MenuFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -62,6 +66,7 @@ public class MenuFragment extends Fragment {
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         Menu menu;
+
         public ScreenSlidePagerAdapter(FragmentManager fm, Menu menu) {
             super(fm);
             this.menu = menu;
@@ -71,8 +76,7 @@ public class MenuFragment extends Fragment {
         public Fragment getItem(int position) {
             ArrayList<Menu.Item> req;
             String str;
-            switch (position)
-            {
+            switch (position) {
                 case 0:
                     req = menu.getBreakfast();
                     str = "BREAKFAST";
